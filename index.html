@@ -2,50 +2,65 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
     <title>İki Rakam Arasındaki Farkı Hesapla</title>
     <style>
+        * {
+            box-sizing: border-box; /* Taşmaları önlemek için her şeyi kutuya dahil et */
+            -webkit-tap-highlight-color: transparent; /* Mobilde tıklama gölgesini kaldır */
+        }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: #f4f6f9;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 100vh; /* Ekran yüksekliğine tam eşitle */
+            width: 100vw;  /* Ekran genişliğine tam eşitle */
             margin: 0;
+            padding: 15px;
+            overflow: hidden; /* Ekranın kaymasını engelle */
         }
         .container {
             background-color: white;
-            padding: 30px;
+            padding: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            width: 380px;
+            width: 100%;
+            max-width: 400px; /* Mobilde taşmasın, masaüstünde çok büyümesin */
             text-align: center;
         }
         h2 {
             color: #2c3e50;
+            margin-top: 0;
             margin-bottom: 20px;
-            font-size: 22px;
+            font-size: 20px;
         }
         .input-group {
             margin-bottom: 15px;
             text-align: left;
         }
         label {
-            font-size: 14px;
+            font-size: 13px;
             color: #7f8c8d;
             font-weight: bold;
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
         input[type="text"] {
             width: 100%;
-            padding: 12px;
+            height: 46px; /* Mobil dokunmatik için ideal yükseklik */
+            padding: 0 12px;
             border: 2px solid #bdc3c7;
             border-radius: 6px;
             font-size: 16px;
-            box-sizing: border-box;
-            transition: border-color 0.3s;
             text-align: center;
+            transition: border-color 0.3s;
+            -webkit-appearance: none; /* iOS varsayılan iç gölgesini kaldır */
         }
         input[type="text"]:focus {
             border-color: #9b59b6;
@@ -55,20 +70,21 @@
             background-color: #9b59b6;
             color: white;
             border: none;
-            padding: 12px 20px;
+            height: 48px; /* Büyük tıklama alanı */
             font-size: 16px;
             border-radius: 6px;
             cursor: pointer;
             width: 100%;
             font-weight: bold;
             transition: background-color 0.3s;
-            margin-top: 10px;
+            margin-top: 5px;
+            -webkit-appearance: none;
         }
         button:hover {
             background-color: #8e44ad;
         }
         .result {
-            margin-top: 25px;
+            margin-top: 20px;
             padding: 15px;
             background-color: #f5eef8;
             border-radius: 6px;
@@ -100,12 +116,12 @@
     
     <div class="input-group">
         <label for="sayi1">1. Sayı (Başlangıç / Eski Değer)</label>
-        <input type="text" id="sayi1" placeholder="" onkeydown="if(event.key==='Enter') hesaplaFark()">
+        <input type="text" id="sayi1" placeholder="" inputmode="decimal" autocomplete="off" onkeydown="if(event.key==='Enter') { this.blur(); hesaplaFark(); }">
     </div>
     
     <div class="input-group">
         <label for="sayi2">2. Sayı (Yeni Değer)</label>
-        <input type="text" id="sayi2" placeholder="" onkeydown="if(event.key==='Enter') hesaplaFark()">
+        <input type="text" id="sayi2" placeholder="" inputmode="decimal" autocomplete="off" onkeydown="if(event.key==='Enter') { this.blur(); hesaplaFark(); }">
     </div>
     
     <button onclick="hesaplaFark()">Farkı Hesapla</button>
