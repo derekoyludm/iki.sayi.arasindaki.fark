@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>İki Rakam Arasındaki Farkı Hesapla</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 380px;
+            text-align: center;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        label {
+            font-size: 14px;
+            color: #7f8c8d;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+            text-align: center;
+        }
+        input[type="text"]:focus {
+            border-color: #9b59b6;
+            outline: none;
+        }
+        button {
+            background-color: #9b59b6;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #8e44ad;
+        }
+        .result {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #f5eef8;
+            border-radius: 6px;
+            display: none;
+            text-align: left;
+        }
+        .result p {
+            margin: 8px 0;
+            font-size: 15px;
+            color: #34495e;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #2c3e50;
+            float: right;
+        }
+        .fark-renk {
+            color: #e67e22;
+        }
+        .yuzde-renk {
+            color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>İki Sayı Arasındaki Fark</h2>
+    
+    <div class="input-group">
+        <label for="sayi1">1. Sayı (Başlangıç / Eski Değer)</label>
+        <input type="text" id="sayi1" placeholder="" onkeydown="if(event.key==='Enter') hesaplaFark()">
+    </div>
+    
+    <div class="input-group">
+        <label for="sayi2">2. Sayı (Yeni Değer)</label>
+        <input type="text" id="sayi2" placeholder="" onkeydown="if(event.key==='Enter') hesaplaFark()">
+    </div>
+    
+    <button onclick="hesaplaFark()">Farkı Hesapla</button>
+
+    <div class="result" id="sonucAlani">
+        <p>1. Sayı: <span class="highlight" id="resSayi1">0.00</span></p>
+        <p>2. Sayı: <span class="highlight" id="resSayi2">0.00</span></p>
+        <hr style="border: 0; border-top: 1px solid #d2b4de; margin: 10px 0;">
+        <p style="font-size: 16px; font-weight: bold;">Matematiksel Fark: <span class="highlight fark-renk" id="resFark">0.00</span></p>
+        <p style="font-size: 16px; font-weight: bold;">Yüzde Değişim: <span class="highlight yuzde-renk" id="resYuzde">%0.00</span></p>
+    </div>
+</div>
+
+<script>
+function temizleVeCevir(deger) {
+    var temiz = deger.trim().replace(/\./g, '').replace(',', '.');
+    return parseFloat(temiz);
+}
+
+function hesaplaFark() {
+    var raw1 = document.getElementById('sayi1').value;
+    var raw2 = document.getElementById('sayi2').value;
+    
+    if (raw1.trim() === "" || raw2.trim() === "") {
+        alert("Lütfen her iki alanı da doldurun.");
+        return;
+    }
+
+    var sayi1 = temizleVeCevir(raw1);
+    var sayi2 = temizleVeCevir(raw2);
+    
+    if (isNaN(sayi1) || isNaN(sayi2)) {
+        alert("Lütfen geçerli sayısal değerler giriniz.");
+        return;
+    }
+
+    // Fark hesaplama
+    var fark = sayi2 - sayi1;
+    
+    // Yüzde değişim hesaplama (İlk sayı sıfır değilse)
+    var yuzdeDegisim = 0;
+    if (sayi1 !== 0) {
+        yuzdeDegisim = (fark / Math.abs(sayi1)) * 100;
+    }
+
+    // Biçimlendirme ayarı
+    var formatAyari = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
+
+    // Sonuçları ekrana basma
+    document.getElementById('resSayi1').innerText = sayi1.toLocaleString('tr-TR', formatAyari);
+    document.getElementById('resSayi2').innerText = sayi2.toLocaleString('tr-TR', formatAyari);
+    
+    // Farkın başına artı/eksi işareti koyma ve yazdırma
+    var farkMetni = (fark > 0 ? "+" : "") + fark.toLocaleString('tr-TR', formatAyari);
+    document.getElementById('resFark').innerText = farkMetni;
+    
+    // Yüzdeyi yazdırma
+    var yuzdeMetni = (yuzdeDegisim > 0 ? "+" : "") + yuzdeDegisim.toLocaleString('tr-TR', formatAyari) + "%";
+    document.getElementById('resYuzde').innerText = yuzdeMetni;
+    
+    // Renkleri duruma göre güncelleme (Artış varsa yeşil, azalış varsa kırmızı)
+    if (fark > 0) {
+        document.getElementById('resFark').style.color = "#27ae60";
+        document.getElementById('resYuzde').style.color = "#27ae60";
+    } else if (fark < 0) {
+        document.getElementById('resFark').style.color = "#c0392b";
+        document.getElementById('resYuzde').style.color = "#c0392b";
+    } else {
+        document.getElementById('resFark').style.color = "#2c3e50";
+        document.getElementById('resYuzde').style.color = "#2c3e50";
+    }
+
+    document.getElementById('sonucAlani').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
