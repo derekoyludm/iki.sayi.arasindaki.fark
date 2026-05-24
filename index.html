@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, user-scalable=no">
 <title>İki Sayı Arasındaki Fark</title>
 
 <style>
@@ -12,45 +12,47 @@
     -webkit-tap-highlight-color:transparent;
 }
 
+/* 🟢 Hem bilgisayarda hem telefonda dikey ve yatay tam ortalama sağlayan esnek yapı */
 body{
     margin:0;
-    min-height:100vh;
     padding:20px;
     background:#eef2f5;
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
     display:flex;
     justify-content:center;
     align-items:center;
+    min-height: 100vh;
 }
 
+/* 🟢 Kutunun genişlik dengesini hem PC hem mobil için koruyan alan */
 .container{
     width:100%;
-    max-width:470px;
+    max-width:440px; /* Birinci kodun ideal genişliği */
     background:#fff;
     border-radius:18px;
     padding:26px;
     box-shadow:0 6px 18px rgba(0,0,0,0.08);
-    display:flex;
-    flex-direction:column;
+    margin: auto; 
 }
 
 h2{
     margin:0 0 18px 0;
     text-align:center;
-    font-size:20px;
+    font-size:18px;
+    font-weight:600;
     color:#2c3e50;
 }
 
 .input-group{
-    margin-bottom:14px;
+    margin-bottom:18px;
 }
 
 label{
     display:block;
     margin-bottom:6px;
+    font-weight:500;
     font-size:13px;
     color:#6b7a90;
-    font-weight:500;
 }
 
 .field-container{
@@ -59,81 +61,108 @@ label{
     align-items:center;
 }
 
-input{
+input,
+button{
     width:100%;
     height:46px;
     border:1.5px solid #c9d2dc;
     border-radius:8px;
-    font-size:15px;
+    font-size:16px; 
     text-align:center;
+    background:#fff;
+    font-weight:400;
     transition:.15s;
 }
 
-input:focus{
+input:focus {
+    font-size: 16px !important;
+}
+
+input:focus {
+    outline: none !important;
+    -webkit-fullscreen-control-style: none;
+    border-color: #8fd4ae !important;
+    box-shadow: 0 0 0 4px rgba(143,212,174,0.45) !important;
+}
+
+.main-btn{
+    flex:1;
+    background:#fff;
+    color:#2c3e50;
+    font-weight:600;
+    cursor:pointer;
+    border:1.5px solid #c9d2dc;
+    transition:.15s;
+}
+
+.main-btn:hover{
+    background:#f6f8fa;
+}
+
+.main-btn:focus,
+.main-btn:active{
     outline:none;
     border-color:#8fd4ae;
     box-shadow:0 0 0 4px rgba(143,212,174,0.35);
 }
 
-.clear-btn{
-    width:46px;
-    min-width:46px;
-    height:46px;
-    border-radius:8px;
-    background:#3498db;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:white;
-    font-size:20px;
-    font-weight:bold;
-    cursor:pointer;
+button.clicked-blue{
+    border-color:#8fd4ae !important;
+    box-shadow:0 0 0 4px rgba(143,212,174,0.45) !important;
 }
 
-/* BUTTONS */
+.reset-btn{
+    width:46px;
+    min-width:46px;
+    background:#fff;
+    color:#2c3e50;
+    border:1.5px solid #c9d2dc;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    transition:.15s;
+}
+
+.reset-btn:hover{
+    background:#f6f8fa;
+}
+
+.reset-btn:focus,
+.reset-btn:active,
+.reset-btn.active-reset{
+    outline:none;
+    border-color:#e74c3c;
+    box-shadow:0 0 0 4px rgba(231,76,60,0.35);
+}
+
+.clear-btn{
+    width:40px;
+    height:46px;
+    min-width:40px;
+    background:#3498db;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+    user-select: none;
+}
+
+.clear-btn:hover{
+    background:#2587ca;
+}
+
 .button-row{
     display:flex;
     gap:10px;
     margin-top:10px;
 }
 
-.main-btn{
-    flex:1;
-    height:46px;
-    border:1.5px solid #c9d2dc;
-    border-radius:8px;
-    background:#fff;
-    font-weight:600;
-    cursor:pointer;
-    transition:.15s;
-}
-
-.main-btn.active{
-    border-color:#8fd4ae;
-    box-shadow:0 0 0 4px rgba(143,212,174,0.45);
-}
-
-.reset-btn{
-    width:46px;
-    min-width:46px;
-    height:46px;
-    border-radius:8px;
-    border:1.5px solid #c9d2dc;
-    background:#fff;
-    cursor:pointer;
-    font-size:18px;
-    transition:.15s;
-}
-
-.reset-btn.active{
-    border-color:#e74c3c;
-    box-shadow:0 0 0 4px rgba(231,76,60,0.35);
-}
-
-/* RESULT */
 .result{
     display:none;
-    margin-top:18px;
+    margin-top:20px;
     background:#f7fbf9;
     padding:15px;
     border-radius:10px;
@@ -141,21 +170,35 @@ input:focus{
 
 .result p{
     margin:8px 0;
-    font-weight:600;
-    color:#2c3e50;
+    font-size:14px;
+    color:#3d4f66;
 }
 
 .highlight{
     float:right;
-    font-weight:700;
+    font-weight:600;
+    color:#2c3e50;
 }
 
-.footer{
-    margin-top:auto;
+.box{
+    margin-top:12px;
+    padding:10px;
+    background:#eaf7ef;
+    border-left:4px solid #2ecc71;
+    border-radius:8px;
+}
+
+.box p{
+    margin:6px 0;
+    font-size:13px;
+}
+
+.creator{
+    margin-top:22px;
     text-align:center;
     font-size:12px;
     color:#9aa6b2;
-    padding-top:15px;
+    letter-spacing:.4px;
 }
 
 </style>
@@ -170,133 +213,149 @@ input:focus{
 <div class="input-group">
 <label>1. Sayı</label>
 <div class="field-container">
-
-<input id="sayi1"
-inputmode="decimal"
-oninput="resetUI()"
-onkeydown="enter(1,event)">
-
-<div class="clear-btn" onclick="temizle('sayi1')">×</div>
-
+<input id="sayi1" type="text" inputmode="decimal">
+<div class="clear-btn" ontouchstart="temizle(event,'sayi1')" onclick="temizle(event,'sayi1')">×</div>
 </div>
 </div>
 
 <div class="input-group">
 <label>2. Sayı</label>
 <div class="field-container">
-
-<input id="sayi2"
-inputmode="decimal"
-oninput="resetUI()"
-onkeydown="enter(2,event)">
-
-<div class="clear-btn" onclick="temizle('sayi2')">×</div>
-
+<input id="sayi2" type="text" inputmode="decimal">
+<div class="clear-btn" ontouchstart="temizle(event,'sayi2')" onclick="temizle(event,'sayi2')">×</div>
 </div>
 </div>
 
 <div class="button-row">
-    <button class="main-btn" id="hesaplaBtn" onclick="hesapla()">Hesapla</button>
-    <button class="reset-btn" onclick="resetle(event)">↺</button>
+
+<button id="hesaplaBtn" class="main-btn" onclick="hesapla()">
+Hesapla
+</button>
+
+<button class="reset-btn" onclick="sifirla(event)">
+↺
+</button>
+
 </div>
 
 <div class="result" id="sonuc">
 
-<p>
-1. Sayı
-<span class="highlight" id="r1">0,00</span>
-</p>
+<p>1. Sayı <span id="r1" class="highlight">0,00</span></p>
+<p>2. Sayı <span id="r2" class="highlight">0,00</span></p>
 
-<p>
-2. Sayı
-<span class="highlight" id="r2">0,00</span>
-</p>
-
-<p>
-Fark
-<span class="highlight" id="rf">0,00</span>
-</p>
-
-<p>
-Yüzde
-<span class="highlight" id="ry">%0,00</span>
-</p>
+<div class="box">
+<p>Fark <span id="rf" class="highlight">0,00</span></p>
+<p style="font-size:15px; font-weight:700; color:#27ae60;"><b>Yüzde</b> <span id="ry" class="highlight" style="color:#27ae60;">%0,00</span></p>
+</div>
 
 </div>
 
-<div class="footer">Created by Fatih Mersin</div>
+<div class="creator">
+    Created by Fatih Mersin
+</div>
 
 </div>
 
 <script>
 
-// ENTER
-function enter(i,e){
-    if(e.key==="Enter"){
-        e.preventDefault();
-        if(i===1){
-            document.getElementById("sayi2").focus();
-        }else{
-            hesapla();
+function temizle(e,id){
+    e.preventDefault();
+    e.stopPropagation();
+    
+    let el = document.getElementById(id);
+    el.value = ""; 
+    hesapGecersizYap(); 
+    
+    el.focus();
+    
+    setTimeout(() => {
+        el.focus();
+        if(typeof el.setSelectionRange === "function") {
+            el.setSelectionRange(0, 0); 
         }
-    }
+    }, 10);
 }
 
-// CLEAR
-function temizle(id){
-    document.getElementById(id).value="";
-    resetUI();
-    setTimeout(()=>document.getElementById(id).focus(),10);
+function g(id){
+    let v=document.getElementById(id).value.trim();
+    if(!v) return 0;
+    return parseFloat(v.replace(/\./g,"").replace(/,/g,".")) || 0;
 }
 
-// PARSE
-function p(v){
-    return parseFloat(v.trim().replace(/\./g,"").replace(",", ".")) || 0;
-}
-
-// HESAPLA
 function hesapla(){
+    let btn=document.getElementById("hesaplaBtn");
+    btn.classList.add("clicked-blue");
 
-    document.getElementById("hesaplaBtn").classList.add("active");
-
-    let a = p(document.getElementById("sayi1").value);
-    let b = p(document.getElementById("sayi2").value);
+    let a = g("sayi1");
+    let b = g("sayi2");
 
     let fark = b - a;
-    let yuzde = a !== 0 ? (fark/Math.abs(a))*100 : 0;
+    let yuzde = a !== 0 ? (fark / Math.abs(a)) * 100 : 0;
 
     let opt = {minimumFractionDigits:2,maximumFractionDigits:2};
 
     document.getElementById("r1").innerText = a.toLocaleString('tr-TR',opt);
     document.getElementById("r2").innerText = b.toLocaleString('tr-TR',opt);
 
-    document.getElementById("rf").innerText =
-        (fark>0?"+":"") + fark.toLocaleString('tr-TR',opt);
-
-    document.getElementById("ry").innerText =
-        (yuzde>0?"+":"") + yuzde.toLocaleString('tr-TR',opt) + "%";
+    document.getElementById("rf").innerText = (fark > 0 ? "+" : "") + fark.toLocaleString('tr-TR',opt);
+    document.getElementById("ry").innerText = (yuzde > 0 ? "+" : "") + yuzde.toLocaleString('tr-TR',opt) + "%";
 
     document.getElementById("sonuc").style.display="block";
 }
 
-// RESET UI
-function resetUI(){
-    document.getElementById("hesaplaBtn").classList.remove("active");
-    document.getElementById("resetBtn")?.classList?.remove?.("active");
-    document.querySelector(".reset-btn").classList.remove("active");
+function hesapGecersizYap(){
     document.getElementById("sonuc").style.display="none";
+    document.getElementById("hesaplaBtn").classList.remove("clicked-blue");
 }
 
-// RESET
-function resetle(e){
+document.querySelectorAll("input")
+.forEach(el=>{
 
+    el.addEventListener("input", ()=>{
+        hesapGecersizYap();
+        document.querySelector(".reset-btn")
+            .classList.remove("active-reset");
+    });
+    
+    if(el.tagName === "INPUT") {
+        el.addEventListener("focus", () => {
+            setTimeout(() => { el.select(); }, 50);
+        });
+    }
+
+});
+
+const alanlar = Array.from(document.querySelectorAll("input"));
+
+alanlar.forEach((el,i)=>{
+    el.addEventListener("keydown",(e)=>{
+        if(e.key==="Enter"){
+            e.preventDefault();
+            document.activeElement.blur();
+
+            let next=alanlar[i+1];
+            if(next){
+                setTimeout(()=>{
+                    next.focus();
+                    if(next.tagName==="INPUT") next.select();
+                },0);
+            }else{
+                hesapla();
+            }
+        }
+    });
+});
+
+function sifirla(e){
     e.preventDefault();
 
     document.querySelectorAll("input").forEach(i=>i.value="");
 
-    resetUI();
+    document.getElementById("sonuc").style.display="none";
+    document.getElementById("hesaplaBtn").classList.remove("clicked-blue");
 
-    document.querySelector(".reset-btn").classList.add("active");
+    let resetBtn = e.currentTarget;
+    resetBtn.classList.add("active-reset");
 }
 
 </script>
